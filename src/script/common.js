@@ -1,143 +1,214 @@
 /* --------------------------------------------
-/* common
-/*　-------------------------------------------- */
+  /* ハンバーガーメニュー
+  /* -------------------------------------------- */
+// ハンバーガー
+document.addEventListener('DOMContentLoaded', () => {
+	const hamburger = document.querySelector('.js-hamburger');
+	const drawerMenu = document.querySelector('.js-drawerMenu');
+	const body = document.body;
 
-// ハンバーガーメニュー
-document.querySelectorAll('.js-hamburger').forEach((button) => {
-	button.addEventListener('click', function () {
-		const drawerMenu = document.querySelector('.js-drawerMenu');
-		if (this.classList.contains('is-open')) {
-			drawerMenu.style.display = 'none';
-			this.classList.remove('is-open');
-			document.body.classList.remove('active');
+	hamburger.addEventListener('click', () => {
+		if (hamburger.classList.contains('is-open')) {
+			fadeOut(drawerMenu);
+			hamburger.classList.remove('is-open');
+			body.classList.remove('active');
 		} else {
-			drawerMenu.style.display = 'block';
-			this.classList.add('is-open');
-			document.body.classList.add('active');
+			fadeIn(drawerMenu);
+			hamburger.classList.add('is-open');
+			body.classList.add('active');
 		}
 	});
-});
 
-//　　スクロールした際の動きを関数でまとめる
-function PageTopAnime() {
-	const scroll = window.scrollY;
-	const pageTop = document.getElementById('pageTop');
-	if (scroll >= 200) {
-		pageTop.classList.remove('DownMove');
-		pageTop.classList.add('UpMove');
-	} else {
-		if (pageTop.classList.contains('UpMove')) {
-			pageTop.classList.remove('UpMove');
-			pageTop.classList.add('DownMove');
-		}
-	}
-}
-
-const wH = window.innerHeight; // 画面の高さを取得
-const footer = document.getElementById('footer');
-const footerPos = footer.getBoundingClientRect().top + window.scrollY; // footerの位置を取得
-const pageTop = document.getElementById('pageTop');
-
-if (scroll + wH >= footerPos + 10) {
-	const pos = scroll + wH - footerPos + 10; // スクロールの値＋画面の高さからfooterの位置＋10pxを引いた場所を取得
-	pageTop.style.bottom = `${pos}px`; // pageTopに上記の値をCSSのbottomに直接指定してフッター手前で止まるようにする
-} else {
-	if (pageTop.classList.contains('UpMove')) {
-		pageTop.style.bottom = '10px'; // 下から10pxの位置にページリンクを指定
-	}
-}
-window.addEventListener('scroll', PageTopAnime);
-
-// ページトップへスクロール
-document.getElementById('pageTop').addEventListener('click', function () {
-	window.scrollTo({
-		top: 0,
-		behavior: 'smooth',
-	});
-});
-
-// スクロール時のイベント
-window.addEventListener('scroll', function () {
-	PageTopAnime(); // スクロール時のアニメーション関数を呼び出し
-	headerColorChange(); // ヘッダーの色変更機能
-});
-
-// ページ読み込み時のイベント
-window.addEventListener('load', function () {
-	PageTopAnime(); // スクロール時のアニメーション関数を呼び出し
-});
-
-// ページトップへのスクロール
-pageTop.addEventListener('click', function (event) {
-	event.preventDefault(); // リンクのデフォルト動作をキャンセル
-	window.scrollTo({
-		top: 0,
-		behavior: 'smooth',
-	});
-});
-
-// ヘッダーの色変更
-function headerColorChange() {
-	const sliderHeight = document.querySelector('.mv').offsetHeight;
-	const scrollPosition = window.scrollY; // 'pageYOffset' の代わりに 'scrollY' を使用
-	const header = document.querySelector('.js-header');
-	if (sliderHeight - 30 < scrollPosition) {
-		header.classList.add('headerColorScroll');
-	} else {
-		header.classList.remove('headerColorScroll');
-	}
-}
-
-// ハッシュに基づくページ内スクロール;
-window.addEventListener('load', function () {
-	const urlHash = location.hash;
-	if (urlHash) {
-		window.scrollTo(0, 0); // ページ上部にスクロール
-		setTimeout(function () {
-			const headerHeight = 130; // ヘッダーの高さ
-			const targetElement = document.querySelector(urlHash);
-			if (targetElement) {
-				const position =
-					targetElement.getBoundingClientRect().top +
-					window.scrollY -
-					headerHeight; // 'pageYOffset' の代わりに 'scrollY' を使用
-				window.scrollTo({
-					top: position,
-					behavior: 'smooth',
-				});
+	function fadeOut(element) {
+		element.style.opacity = 1;
+		(function fade() {
+			if ((element.style.opacity -= 0.1) < 0) {
+				element.style.display = 'none';
+			} else {
+				requestAnimationFrame(fade);
 			}
-		}, 100);
+		})();
+	}
+
+	function fadeIn(element) {
+		element.style.opacity = 0;
+		element.style.display = 'block';
+		(function fade() {
+			let val = parseFloat(element.style.opacity);
+			if (!((val += 0.1) > 1)) {
+				element.style.opacity = val;
+				requestAnimationFrame(fade);
+			}
+		})();
 	}
 });
 
 /* --------------------------------------------
-/* Top
-/*　-------------------------------------------- */
+  /* スクロールした際の動きを関数でまとめる
+  /* ------------------------------------------ */
+function PageTopAnime() {
+	const scroll = window.scrollY; // スクロール値を取得
+	const pageTop = document.getElementById('pageTop');
+	const footer = document.getElementById('footer');
 
-// ローディングアニメーション
-window.addEventListener('load', function () {
-	const loadCount = sessionStorage.getItem('loadCount');
-
-	if (loadCount === null) {
-		const loading = document.querySelector('.js-loading');
-		const loadingTitle = document.querySelector('.js-loadingTitle');
-		loading.style.display = 'block'; // fadeInの代わり
-		loadingTitle.style.display = 'block'; // fadeInの代わり
-		setTimeout(() => {
-			loading.style.display = 'none'; // fadeOutの代わり
-			document.body.classList.remove('js-fixed');
-		}, 2900);
-		sessionStorage.setItem('loadCount', 1);
+	if (scroll >= 200) {
+		// 200pxスクロールしたら
+		pageTop.classList.remove('DownMove'); // DownMoveというクラス名を除去して
+		pageTop.classList.add('UpMove'); // UpMoveというクラス名を追加して出現
 	} else {
-		document.querySelector('.js-loading').style.display = 'none';
-		document.querySelector('.js-loadingTitle').style.display = 'none';
-		document.body.classList.remove('js-fixed');
+		// それ以外は
+		if (pageTop.classList.contains('UpMove')) {
+			// UpMoveというクラス名が既に付与されていたら
+			pageTop.classList.remove('UpMove'); // UpMoveというクラス名を除去し
+			pageTop.classList.add('DownMove'); // DownMoveというクラス名を追加して非表示
+		}
+	}
+
+	const wH = window.innerHeight; // 画面の高さを取得
+	const footerPos = footer.getBoundingClientRect().top + window.scrollY; // footerの位置を取得
+	if (scroll + wH >= footerPos + 10) {
+		const pos = scroll + wH - footerPos + 10; // スクロールの値＋画面の高さからfooterの位置＋10pxを引いた場所を取得し
+		pageTop.style.bottom = `${pos}px`; // #pageTopに上記の値をCSSのbottomに直接指定してフッター手前で止まるようにする
+	} else {
+		// それ以外は
+		if (pageTop.classList.contains('UpMove')) {
+			// UpMoveというクラス名がついていたら
+			pageTop.style.bottom = '10px'; // 下から10pxの位置にページリンクを指定
+		}
+	}
+}
+
+// スクロールイベントにPageTopAnime関数を紐づける
+window.addEventListener('scroll', PageTopAnime);
+
+/* --------------------------------------------
+  /* スクロール
+  /* -------------------------------------------- */
+// 画面をスクロールしたら動かしたい場合の記述
+window.addEventListener('scroll', () => {
+	PageTopAnime(); // スクロールした際の動きの関数を呼ぶ
+});
+
+// ページが読み込まれたらすぐに動かしたい場合の記述
+window.addEventListener('load', () => {
+	PageTopAnime(); // スクロールした際の動きの関数を呼ぶ
+});
+
+// #pageTopをクリックした際の設定
+document.getElementById('pageTop').addEventListener('click', (event) => {
+	event.preventDefault(); // リンク自体の無効化
+	window.scrollTo({
+		top: 0,
+		behavior: 'smooth',
+	});
+});
+
+// スクロールするとロゴの色変更
+document.addEventListener('DOMContentLoaded', () => {
+	window.addEventListener('scroll', () => {
+		const sliderHeight = document.querySelector('.mv').clientHeight;
+		const header = document.querySelector('.js-header');
+		if (sliderHeight - 30 < window.scrollY) {
+			header.classList.add('headerColorScroll');
+		} else {
+			header.classList.remove('headerColorScroll');
+		}
+	});
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+	// 別ページの場合は以下
+	if (location.hash) {
 		window.scrollTo(0, 0);
+		setTimeout(() => {
+			const headerHeight = 130; // ヘッダーの高さ
+			const target = document.querySelector(location.hash);
+			const position =
+				target.getBoundingClientRect().top +
+				window.scrollY -
+				headerHeight;
+			window.scrollTo({
+				top: position,
+				behavior: 'smooth',
+			});
+		}, 100);
 	}
 });
 
-// Swiper
+// ページ内スクロール
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+	anchor.addEventListener('click', (event) => {
+		event.preventDefault();
+		const href = anchor.getAttribute('href');
+		const target = document.querySelector(
+			href === '#' || href === '' ? 'html' : href,
+		);
+		const position = target.getBoundingClientRect().top + window.scrollY;
+		window.scrollTo({
+			top: position,
+			behavior: 'smooth',
+		});
+	});
+});
+
+/* --------------------------------------------
+  /* ローディングアニメーション
+  /* -------------------------------------------- */
+window.addEventListener('load', function () {
+	let loadCount = sessionStorage.getItem('loadCount');
+
+	// 初回のロード時の処理
+	if (loadCount === null) {
+		const jsLoading = document.querySelector('.js-loading');
+		const jsLoadingTitle = document.querySelector('.js-loadingTitle');
+		const body = document.body;
+
+		fadeIn(jsLoading, 0, 900);
+		fadeIn(jsLoadingTitle, 300, 800);
+		setTimeout(() => {
+			fadeOut(jsLoading, 2500, 900);
+			setTimeout(() => {
+				body.classList.remove('js-fixed');
+			}, 2500);
+		}, 2500);
+
+		sessionStorage.setItem('loadCount', 1);
+	} else {
+		// 2回目以降のロード時の処理
+		document.querySelector('.js-loading').style.display = 'none';
+		document.querySelector('.js-loadingTitle').style.display = 'none';
+		document.body.classList.remove('js-fixed');
+		window.scrollTo(0, 0); // スクロール位置をトップに戻す
+	}
+});
+
+function fadeIn(element, delay, duration) {
+	setTimeout(() => {
+		element.style.transition = `opacity ${duration}ms`;
+		element.style.opacity = 1;
+		element.style.display = 'block';
+	}, delay);
+}
+
+function fadeOut(element, delay, duration) {
+	setTimeout(() => {
+		element.style.transition = `opacity ${duration}ms`;
+		element.style.opacity = 0;
+		setTimeout(() => {
+			element.style.display = 'none';
+		}, duration);
+	}, delay);
+}
+
+/* --------------------------------------------
+  /* Swiper
+  /* -------------------------------------------- */
+import Swiper from 'swiper';
+import 'swiper/css/bundle';
+import { Autoplay, EffectFade, FreeMode, Parallax } from 'swiper/modules';
+
 const swiper = new Swiper('.js-mv-slider', {
+	modules: [Autoplay, FreeMode, EffectFade, Parallax],
 	loop: true,
 	allowTouchMove: false,
 	effect: 'fade',
@@ -147,12 +218,16 @@ const swiper = new Swiper('.js-mv-slider', {
 	},
 });
 
-// Swiperカード
+/* --------------------------------------------
+  /* Swiper-card
+  /* -------------------------------------------- */
 const mySwiperWrapper = document.querySelector('.swiper-wrapper');
 const horizonSlider = new Swiper('.js-campaign-slider', {
+	modules: [Autoplay, FreeMode, EffectFade, Parallax],
 	loop: true,
 	effect: 'slide',
-	disableOnInteraction: false, // 矢印をクリックしても自動再生を止めない
+	disableOnInteraction: false,
+	// 矢印をクリックしても自動再生を止めない
 	slidesPerView: 1.26,
 	breakpoints: {
 		768: {
@@ -176,46 +251,71 @@ const horizonSlider = new Swiper('.js-campaign-slider', {
 	},
 });
 
-// 背景色アニメーション
+/* --------------------------------------------
+  /* 背景色アニメーション
+  /* -------------------------------------------- */
 // 要素の取得とスピードの設定
-function setupSlideColorAnimation(selector, speed) {
-	const boxes = document.querySelectorAll(selector);
+const boxes = document.querySelectorAll('.js-slideColor');
+const speed = 600;
 
-	boxes.forEach((box) => {
-		const view = document.createElement('div');
-		view.className = 'is-view';
-		box.appendChild(view);
-		const image = box.querySelector('img');
-		image.style.opacity = '0';
-		view.style.width = '0%';
+// .js-slideColorの付いた全ての要素に対して下記の処理を行う
+boxes.forEach((box) => {
+	box.insertAdjacentHTML('beforeend', '<div class="is-view"></div>');
+	const color = box.querySelector('.is-view');
+	const image = box.querySelector('img');
+	let counter = 0;
+	image.style.opacity = '0';
+	color.style.width = '0%';
 
-		let observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						view.style.transition = `width ${speed}ms`;
-						view.style.width = '100%';
-						setTimeout(() => {
+	// inviewイベントの設定（IntersectionObserverを使用）
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting && counter === 0) {
+					setTimeout(() => {
+						animateWidth(color, '100%', speed, () => {
 							image.style.opacity = '1';
-							view.style.width = '0%';
-							observer.unobserve(entry.target); // 一度アニメーションが完了したら監視を停止
-						}, speed);
-					}
-				});
-			},
-			{ threshold: 0.1 },
-		);
+							color.style.left = '0';
+							color.style.right = 'auto';
+							animateWidth(color, '0%', speed);
+						});
+					}, 300);
+					counter = 1;
+				}
+			});
+		},
+		{ threshold: 0.5 },
+	);
 
-		observer.observe(view);
-	});
+	observer.observe(color);
+});
+
+function animateWidth(element, width, duration, callback) {
+	const startWidth = parseFloat(element.style.width);
+	const endWidth = parseFloat(width);
+	const frameDuration = 1000 / 60;
+	const totalFrames = Math.round(duration / frameDuration);
+	let currentFrame = 0;
+
+	function updateFrame() {
+		currentFrame++;
+		const progress = currentFrame / totalFrames;
+		const currentWidth = startWidth + (endWidth - startWidth) * progress;
+		element.style.width = `${currentWidth}%`;
+
+		if (currentFrame < totalFrames) {
+			requestAnimationFrame(updateFrame);
+		} else {
+			if (callback) callback();
+		}
+	}
+
+	requestAnimationFrame(updateFrame);
 }
 
-setupSlideColorAnimation('.js-slideColor', 600);
-
 /* --------------------------------------------
-/* aboutUs
-/*　-------------------------------------------- */
-
+  /* about us
+  /* -------------------------------------------- */
 MicroModal.init({
 	awaitCloseAnimation: true,
 	awaitOpenAnimation: true,
@@ -223,129 +323,74 @@ MicroModal.init({
 });
 
 /* --------------------------------------------
-/* information
-/*　-------------------------------------------- */
+  /* タブメニュー
+  /* -------------------------------------------- */
+const jsTabs = document.querySelectorAll('.js-infoTab-trigger');
+const jsTabTargets = document.querySelectorAll('.js-infoContent-target');
+const cls = 'is-active';
 
-// タブメニュー
-document.addEventListener('DOMContentLoaded', () => {
-	const tabs = document.querySelectorAll('.js-infoTab-trigger');
-	const tabContents = document.querySelectorAll('.js-infoContent-target');
-	const cls = 'is-active';
-
-	tabs.forEach((tab) => {
-		tab.addEventListener('click', () => {
-			const thisCategory = tab.getAttribute('data-category');
-
-			tabs.forEach((t) => t.classList.remove(cls));
-			tab.classList.add(cls);
-
-			tabContents.forEach((content) => {
-				content.classList.remove(cls);
-				if (content.getAttribute('data-target') === thisCategory) {
-					content.classList.add(cls);
-				}
-			});
+jsTabs.forEach((tab) => {
+	tab.addEventListener('click', function () {
+		const thisCategory = this.getAttribute('data-category');
+		jsTabs.forEach((tab) => tab.classList.remove(cls));
+		this.classList.add(cls);
+		jsTabTargets.forEach((target) => {
+			target.classList.remove(cls);
+			if (thisCategory === target.getAttribute('data-target')) {
+				target.classList.add(cls);
+			}
 		});
 	});
+});
 
-	// タブへダイレクトリンクの実装
-	const hash = location.hash;
-	const validHash = hash.match(/^#tab_panel-\d+$/);
-	const tabName = validHash ? hash.slice(1) : 'tab_panel-1';
-
-	tabs.forEach((t) => t.classList.remove(cls));
-	tabContents.forEach((c) => c.classList.remove(cls));
-
-	const activeTab = document.querySelector(
-		`.js-infoTab-trigger[data-category="${tabName}"]`,
-	);
-	const activeContent = document.getElementById(tabName);
-
-	if (activeTab && activeContent) {
-		activeTab.classList.add(cls);
-		activeContent.classList.add(cls);
+/* --------------------------------------------
+  /* タブへダイレクトリンクの実装
+  /* -------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+	let hash = location.hash.match(/^#tab_panel-\d+$/)
+		? location.hash.slice(1)
+		: 'tab_panel-1';
+	const tabNo = Array.from(
+		document.querySelectorAll('.js-infoContent-target'),
+	).findIndex((target) => target.id === hash);
+	if (tabNo !== -100) {
+		document
+			.querySelectorAll('.js-infoTab-trigger')
+			[tabNo].classList.add(cls);
+		document
+			.querySelectorAll('.js-infoContent-target')
+			[tabNo].classList.add(cls);
 	}
 });
 
 /* --------------------------------------------
-/* blog
-/*　-------------------------------------------- */
-document.addEventListener('DOMContentLoaded', () => {
-	// 古いアーカイブアイテムの処理
-	document.querySelectorAll('.js-archive-item--old').forEach((item) => {
-		item.addEventListener('click', () => {
-			const subItems = item.nextElementSibling;
-			toggleVisibility(subItems);
-			item.classList.toggle('open');
-			document
-				.querySelector('.archive__item--oldLayout')
-				.classList.toggle('open');
-		});
+  /* アーカイブ　月別リンク
+  /* -------------------------------------------- */
+document.querySelectorAll('.js-archive-item--open').forEach((item) => {
+	item.addEventListener('click', function () {
+		this.nextElementSibling.classList.toggle('close');
 	});
-
-	// 新しいアーカイブアイテムの処理
-	document.querySelectorAll('.js-archive-item--new').forEach((item) => {
-		item.addEventListener('click', () => {
-			const subItems = item.nextElementSibling;
-			toggleVisibility(subItems);
-			item.classList.toggle('open');
-			document
-				.querySelector('.archive__item--newLayout')
-				.classList.toggle('open');
-		});
-	});
-
-	function toggleVisibility(element) {
-		if (element.style.display === 'none' || element.style.display === '') {
-			element.style.display = 'block';
-			setTimeout(() => {
-				element.style.height = null; // CSSで設定された高さに戻す
-			}, 600); // アニメーション時間
-		} else {
-			element.style.height = element.scrollHeight + 'px'; // 現在の高さをピクセルで設定
-			element.offsetHeight; // CSSの再計算を強制
-			element.style.transition = 'height 600ms ease';
-			element.style.height = '0px'; // 高さを0にアニメーション
-			setTimeout(() => {
-				element.style.display = 'none'; // 完全に隠す
-				element.style.height = null; // スタイルをクリア
-				element.style.transition = null; // トランジションをクリア
-			}, 600); // アニメーション時間
-		}
-	}
 });
 
 /* --------------------------------------------
-/* FAQ
-/*　-------------------------------------------- */
-document.addEventListener('DOMContentLoaded', () => {
-	// FAQアコーディオンのタイトル要素に対するイベントリスナーを設定
-	document.querySelectorAll('.js-faqAccordion-title').forEach((title) => {
-		title.addEventListener('click', () => {
-			const content = title.nextElementSibling; // クリックされたタイトルの次の要素を取得
-			toggleVisibility(content); // 表示切り替え関数を呼び出す
-			title.classList.toggle('open'); // openクラスの付け外し
-		});
+  /* FAQ アコーディオン
+  /* -------------------------------------------- */
+document.querySelectorAll('.js-faqAccordion-title').forEach((title) => {
+	title.addEventListener('click', function () {
+		this.nextElementSibling.style.display =
+			this.nextElementSibling.style.display === 'none' ? '' : 'none';
+		this.classList.toggle('open');
 	});
+});
 
-	// 要素の表示を切り替える関数
-	function toggleVisibility(element) {
-		if (element.style.display === 'none' || element.style.display === '') {
-			element.style.display = 'block';
-			element.style.height = 'auto'; // 高さを自動で設定
-			setTimeout(() => {
-				element.style.height = null; // 高さの設定をクリア
-			}, 300); // アニメーション時間
-		} else {
-			element.style.height = element.scrollHeight + 'px'; // 現在の高さを設定
-			element.offsetHeight; // CSSの再計算を強制
-			element.style.transition = 'height 300ms ease'; // トランジションを設定
-			element.style.height = '0px'; // 高さを0にアニメーション
-			setTimeout(() => {
-				element.style.display = 'none'; // 完全に隠す
-				element.style.height = null; // 高さのスタイルをクリア
-				element.style.transition = null; // トランジションをクリア
-			}, 300); // アニメーション時間
-		}
-	}
+/* --------------------------------------------
+  /* コンタクトページ　バリデーション
+  /* -------------------------------------------- */
+document.querySelector('.form-submit').addEventListener('click', () => {
+	document
+		.querySelectorAll('.wpcf7-form-control-wrap')
+		.forEach((wrap) => wrap.classList.add('is-show'));
+	document
+		.querySelectorAll('.js-errorMessage')
+		.forEach((msg) => msg.classList.add('is-show'));
 });

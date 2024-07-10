@@ -1,17 +1,16 @@
 ---
 import { navData } from '@data/siteData';
-import 'src/sass/module/_header.scss';
 ---
 
 <nav class='header__nav header__nav--md-none'>
 	<ul class='header__items'>
 		{
-			navData.map(({ link, href, title, subText }) => (
+			navData.map(({ isBig, href, title, subText }) => (
 				<li
 					class={
-						href === './faq'
-							? 'header__item header__item--big'
-							: link
+						isBig
+							? 'header__item'
+							: 'header__item header__item--big'
 					}
 				>
 					<a href={href} aria-label={title}>
@@ -23,3 +22,91 @@ import 'src/sass/module/_header.scss';
 		}
 	</ul>
 </nav>
+
+<style lang='scss'>
+	@use 'src/sass/_function.scss' as *;
+	@use 'src/sass/_breakpoints.scss' as *;
+	@use 'src/sass/_setting.scss' as *;
+
+	.header__nav {
+		height: inherit;
+		display: flex;
+		align-items: center;
+	}
+
+	.header__nav--md-none {
+		display: none;
+		@include mq('md') {
+			display: block;
+		}
+	}
+
+	.header__items {
+		height: inherit;
+		display: flex;
+		align-items: center;
+		text-align: center;
+	}
+
+	.header__item {
+		height: inherit;
+		text-transform: capitalize;
+		font-size: rem(18);
+		font-weight: $regular;
+		font-family: $en-font-family1;
+		line-height: 1;
+		color: $white;
+	}
+
+	// ホバー時に中央から両端に下線が伸びる<---------------------------------------------
+	.header__item a {
+		display: inline-block;
+		position: relative;
+	}
+
+	.header__item a::after {
+		content: '';
+		position: absolute;
+		bottom: rem(20);
+		left: 0;
+		background-color: $white;
+		height: rem(1);
+		transform: scale(0, 1);
+		transform-origin: center top;
+		transition: transform 0.3s;
+		width: 100%;
+	}
+
+	.header__item a:hover::after {
+		transform: scale(1, 1);
+	}
+	// 終了--------------------------------------->
+
+	.header__item a {
+		height: inherit;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		@include mq(md) {
+			padding: 0 rem(13);
+		}
+		@include mq(lg) {
+			padding: 0 rem(19);
+		}
+	}
+
+	.header__item span {
+		display: block;
+		text-align: center;
+		font-size: rem(10);
+		font-weight: $regular;
+		font-family: $jp-font-family1;
+		line-height: calc(15 / 10);
+		color: $white;
+	}
+
+	.header__item--big {
+		text-transform: uppercase;
+	}
+</style>

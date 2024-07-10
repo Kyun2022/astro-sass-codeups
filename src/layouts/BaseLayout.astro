@@ -2,8 +2,6 @@
 import BaseHead from '@layouts/BaseHead.astro';
 import Loding from '@components/Loding.astro';
 import Header from '@components/Header.astro';
-import Mv from '@components/Mv.astro';
-import Campain from '@components/Campain.astro';
 import AboutUs from '@components/AboutUs.astro';
 import Information from '@components/Information.astro';
 import Blog from '@components/Blog.astro';
@@ -25,14 +23,7 @@ import '@/sass/_setting.scss';
 		<!-- <Loding /> -->
 		<Header />
 		<main>
-			<!-- <Mv />
-			<Campain />
-			<AboutUs />
-			<Information />
-			<Blog />
-			<Voice />
-			<Price />
-			<Contact /> -->
+			<slot />
 		</main>
 		<!-- <Footer /> -->
 

@@ -1,5 +1,11 @@
 ---
-
+import Link from '@/components/Link.astro';
+import {
+	drawerData1,
+	drawerData2,
+	drawerData3,
+	drawerOneData,
+} from '@/data/siteData';
 ---
 
 <div class='header__drawer drawer-menu drawer-menu--all-close js-drawerMenu'>
@@ -7,103 +13,224 @@
 		<div class='drawer-menu__container-left'>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./campaign.html'>キャンペーン</a>
+					<Link href={drawerOneData[0].hrefData}
+						>{drawerOneData[0].textData}
+					</Link>
 				</p>
 				<ul class='drawer-menu__items'>
-					<li class='drawer-menu__item'>
-						<a href='./campaign.html#campaign1'> ライセンス講習 </a>
-					</li>
-					<li class='drawer-menu__item'>
-						<a href='./campaign.html#campaign2'
-							>貸切体験ダイビング
-						</a>
-					</li>
-					<li class='drawer-menu__item'>
-						<a href='./campaign.html#campaign3'>
-							ナイトダイビング
-						</a>
-					</li>
+					{
+						drawerData1.map(({ href, text }) => (
+							<li class='drawer-menu__item'>
+								<Link href={href}>{text}</Link>
+							</li>
+						))
+					}
 				</ul>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./aboutus.html'>私たちについて</a>
+					<Link href={drawerOneData[1].hrefData}
+						>{drawerOneData[1].textData}
+					</Link>
 				</p>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./information.html'>ダイビング情報</a>
+					<Link href={drawerOneData[2].hrefData}
+						>{drawerOneData[2].textData}
+					</Link>
 				</p>
 				<ul class='drawer-menu__items'>
-					<li class='drawer-menu__item'>
-						<a href='./information.html#tab_panel-1'
-							>ライセンス講習
-						</a>
-					</li>
-					<li class='drawer-menu__item'>
-						<a href='./information.html#tab_panel-3'
-							>体験ダイビング
-						</a>
-					</li>
-					<li class='drawer-menu__item'>
-						<a href='./information.html#tab_panel-2'
-							>ファンダイビング
-						</a>
-					</li>
+					{
+						drawerData2.map(({ href, text }) => (
+							<li class='drawer-menu__item'>
+								<Link href={href}>{text}</Link>
+							</li>
+						))
+					}
 				</ul>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./blog.html'>ブログ</a>
+					<Link href={drawerOneData[3].hrefData}
+						>{drawerOneData[3].textData}
+					</Link>
 				</p>
 			</div>
 		</div>
 		<div class='drawer-menu__container-right'>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./voice.html'>お客様の声</a>
+					<Link href={drawerOneData[4].hrefData}
+						>{drawerOneData[4].textData}
+					</Link>
 				</p>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./price.html'>料金一覧</a>
+					<Link href={drawerOneData[5].hrefData}
+						>{drawerOneData[5].textData}
+					</Link>
 				</p>
 			</div>
 			<div class='drawer-menu__contents'>
 				<ul class='drawer-menu__items'>
-					<li class='drawer-menu__item'>
-						<a href='./price.html#Price1'>ライセンス講習</a>
-					</li>
-					<li class='drawer-menu__item'>
-						<a href='./price.html#Price2'>体験ダイビング</a>
-					</li>
-					<li class='drawer-menu__item'>
-						<a href='./price.html#Price3'>ファンダイビング</a>
-					</li>
+					{
+						drawerData3.map(({ href, text }) => (
+							<li class='drawer-menu__item'>
+								<a href={href}>{text}</a>
+							</li>
+						))
+					}
 				</ul>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./faq.html'>よくある質問</a>
+					<Link href={drawerOneData[6].hrefData}
+						>{drawerOneData[6].textData}
+					</Link>
 				</p>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./privacy-policy.html'
-						>プライバシー<br class='u-mobile' />ポリシー</a
-					>
+					<Link href={drawerOneData[7].hrefData}
+						>{drawerOneData[7].textData}
+					</Link>
 				</p>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./terms-of-service.html'>利用規約</a>
+					<Link href={drawerOneData[8].hrefData}
+						>プライバシー<br class='u-mobile' />ポリシー
+					</Link>
 				</p>
 			</div>
 			<div class='drawer-menu__contents'>
 				<p class='drawer-menu__list-name'>
-					<a href='./contact.html'>お問い合わせ</a>
+					<Link href={drawerOneData[9].hrefData}
+						>{drawerOneData[9].textData}
+					</Link>
 				</p>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style lang='scss'>
+	@use 'src/sass/_function.scss' as *;
+	@use 'src/sass/_setting.scss' as *;
+	@use 'src/sass/_breakpoints.scss' as *;
+
+	.drawer-menu {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		height: 100%;
+		background-color: $green;
+		z-index: 8888;
+		transition: transform 0.3s ease;
+		padding-top: rem(90);
+		padding-bottom: rem(104);
+	}
+
+	.drawer-menu--all-close {
+		display: none;
+	}
+	.drawer-menu.is-open {
+		display: block;
+	}
+
+	.drawer-menu__inner {
+		max-width: rem(400);
+		display: flex;
+		justify-content: center;
+		margin-top: rem(50);
+		overflow-y: scroll;
+		height: 100vh;
+	}
+
+	.drawer-menu__container-left {
+		width: 100%;
+		max-width: 53%;
+		padding-left: rem(25);
+		@include mq(md) {
+			max-width: calc((190 / 338) * 100%);
+		}
+	}
+	.drawer-menu__container-right {
+		width: 100%;
+		max-width: 47%;
+		margin-left: rem(2);
+		padding-left: rem(25);
+		@include mq(md) {
+			margin-left: rem(7);
+			max-width: calc((148 / 338) * 100%);
+		}
+	}
+
+	.drawer-menu__list-name {
+		display: flex;
+		align-items: center;
+	}
+	.starfish-icon {
+		display: inline-block;
+		padding-right: rem(4);
+		width: rem(18);
+		height: rem(18);
+	}
+	.ly-starfish-icon {
+		margin-top: rem(-18);
+	}
+	.drawer-menu__contents:not(:first-child) {
+		margin-top: rem(40);
+	}
+	.drawer-menu__list-name {
+		font-size: rem(16);
+		font-family: $jp-font-family1;
+		font-weight: $bold;
+		line-height: calc(18 / 16);
+		color: $white;
+		position: relative;
+	}
+	.drawer-menu__list-name a {
+		display: block;
+		width: 100%;
+	}
+	.drawer-menu__list-name::before {
+		content: '';
+		display: inline-block;
+		width: rem(18);
+		height: rem(18);
+		background-image: url(src/icons/starfish.png);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: absolute;
+		left: rem(-24);
+	}
+	.drawer-menu__items {
+		margin-top: rem(24);
+	}
+
+	.drawer-menu__item {
+		margin-top: rem(24);
+		font-size: rem(16);
+		font-family: $jp-font-family1;
+		font-weight: $regular;
+		color: $white;
+		line-height: calc(18 / 16);
+		width: 100%;
+	}
+	.drawer-menu__item a {
+		display: block;
+		width: 100%;
+	}
+
+	/* スクロールしたらヘッダーメニューのフォントカラー変更 */
+	.header.drawer-menu.headerColorScroll {
+		background-color: #ff6347;
+		transition: color 0.4s ease-out;
+	}
+</style>
