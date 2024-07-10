@@ -1,0 +1,12 @@
+@use 'src/sass/_function.scss' as *;
+@use 'src/sass/_breakpoints.scss' as *;
+@use 'src/sass/_setting.scss' as *;
+
+.under-thanks {
+	margin-top: rem(52);
+	padding-bottom: rem(144);
+	@include mq(md) {
+		margin-top: rem(150);
+		padding-bottom: rem(120);
+	}
+}

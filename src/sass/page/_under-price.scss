@@ -1,0 +1,10 @@
+@use 'src/sass/_function.scss' as *;
+@use 'src/sass/_breakpoints.scss' as *;
+@use 'src/sass/_setting.scss' as *;
+
+.under-price {
+	margin-top: rem(53);
+	@include mq(md) {
+		margin-top: rem(148);
+	}
+}

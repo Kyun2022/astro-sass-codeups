@@ -1,0 +1,23 @@
+---
+import Nav from '@components/Nav.astro';
+import Hamburger from '@components/Hamburger.astro';
+import Drawer from '@components/Drawer.astro';
+
+import Logo from '@icons/logo_1.png';
+import { Image } from 'astro:assets';
+
+import '/src/sass/module/_header.scss';
+---
+
+<header class='header js-header'>
+	<div class='header__inner'>
+		<h1 class='header__logo'>
+			<a href='./index.html'>
+				<img src={Logo.src} alt='CodeUpsの文字、会社のロゴ' /></a
+			>
+		</h1>
+		<Nav />
+		<Hamburger />
+		<!-- <Drawer /> -->
+	</div>
+</header>

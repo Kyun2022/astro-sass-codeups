@@ -1,0 +1,25 @@
+---
+import { navData } from '@data/siteData';
+import 'src/sass/module/_header.scss';
+---
+
+<nav class='header__nav header__nav--md-none'>
+	<ul class='header__items'>
+		{
+			navData.map(({ link, href, title, subText }) => (
+				<li
+					class={
+						href === './faq'
+							? 'header__item header__item--big'
+							: link
+					}
+				>
+					<a href={href} aria-label={title}>
+						{title}
+						<span>{subText}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>

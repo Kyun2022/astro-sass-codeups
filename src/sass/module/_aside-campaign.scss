@@ -1,0 +1,8 @@
+@use 'src/sass/_function.scss' as *;
+@use 'src/sass/_breakpoints.scss' as *;
+@use 'src/sass/_setting.scss' as *;
+
+.aside-campaign__button {
+	text-align: center;
+	margin-top: rem(40);
+}

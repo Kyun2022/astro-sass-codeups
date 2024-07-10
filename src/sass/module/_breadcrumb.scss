@@ -1,0 +1,16 @@
+@use 'src/sass/_function.scss' as *;
+@use 'src/sass/_breakpoints.scss' as *;
+@use 'src/sass/_setting.scss' as *;
+
+.breadcrumb {
+	margin-top: rem(8);
+}
+.breadcrumb-text {
+	color: $dark-green;
+	font-family: $jp-font-family1;
+	font-size: rem(14);
+	font-weight: $normal;
+}
+.breadcrumb-text--white {
+	color: $white;
+}

@@ -1,0 +1,43 @@
+---
+import BaseHead from '@layouts/BaseHead.astro';
+import Loding from '@components/Loding.astro';
+import Header from '@components/Header.astro';
+import Mv from '@components/Mv.astro';
+import Campain from '@components/Campain.astro';
+import AboutUs from '@components/AboutUs.astro';
+import Information from '@components/Information.astro';
+import Blog from '@components/Blog.astro';
+import Voice from '@components/Voice.astro';
+import Price from '@components/Price.astro';
+import Contact from '@components/Contact.astro';
+import Footer from '@components/Footer.astro';
+
+import '@/sass/_base.scss';
+import '@/sass/_reset.scss';
+import '@/sass/_function.scss';
+import '@/sass/_breakpoints.scss';
+import '@/sass/_setting.scss';
+---
+
+<html lang='ja'>
+	<BaseHead {...Astro.props} />
+	<body class='js-fixed'>
+		<!-- <Loding /> -->
+		<Header />
+		<main>
+			<!-- <Mv />
+			<Campain />
+			<AboutUs />
+			<Information />
+			<Blog />
+			<Voice />
+			<Price />
+			<Contact /> -->
+		</main>
+		<!-- <Footer /> -->
+
+		<div id='pageTop'><a href='./index.html'></a></div>
+
+		<script src='src/script/common.js'></script>
+	</body>
+</html>
