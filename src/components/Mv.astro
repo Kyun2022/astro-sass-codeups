@@ -9,7 +9,7 @@ import { mvData } from '@/data/siteData';
 			<div class='swiper-wrapper mv__items'>
 				{
 					mvData.map(({ srcset, media, src, alt }) => (
-						<div class='swiper-slide mv__item' type='module' src='src/js/common.js'>
+						<div class='swiper-slide mv__item'>
 							<picture>
 								<source srcset={srcset} media={media} />
 								<img src={src} alt={alt} />
@@ -80,4 +80,3 @@ import { mvData } from '@/data/siteData';
 		}
 	</style>
 </section>
-

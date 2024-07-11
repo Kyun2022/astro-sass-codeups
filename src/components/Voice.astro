@@ -4,7 +4,7 @@
 
 <section class='voice top-voice'>
 	<figure class='voice__top-decoration voice__top-decoration--md-none'>
-		<img src='assets/fishes-right.png' alt='魚の群れの様子' />
+		<img src='src/icons/fishes-right.png' alt='魚の群れの様子' />
 	</figure>
 	<div class='voice__inner inner'>
 		<div class='voice__title title title--center'>
@@ -29,7 +29,7 @@
 							</div>
 							<figure class='box__image js-slideColor2'>
 								<img
-									src='assets/box_1.jpg'
+									src='src/assets/box_1.jpg'
 									alt='笑顔の女性が麦わら帽子を被ってこちらを見ている様子'
 								/>
 							</figure>
@@ -59,7 +59,7 @@
 							</div>
 							<figure class='box__image js-slideColor3'>
 								<img
-									src='assets/box_2.jpg'
+									src='src/assets/box_2.jpg'
 									alt='笑顔の青年が親指を突き出している様子'
 								/>
 							</figure>
@@ -82,6 +82,236 @@
 		</div>
 	</div>
 	<figure class='voice__bottom-decoration voice__bottom-decoration--md-none'>
-		<img src='assets/seahorse.png' alt='竜の落とし子のデザイン' />
+		<img src='src/icons/seahorse.png' alt='竜の落とし子のデザイン' />
 	</figure>
 </section>
+
+<style lang='scss'>
+	@use 'src/sass/_function.scss' as *;
+	@use 'src/sass/_breakpoints.scss' as *;
+	@use 'src/sass/_setting.scss' as *;
+
+	.top-voice {
+		margin-top: rem(84);
+		@include mq(md) {
+			margin-top: rem(144);
+			position: relative;
+		}
+	}
+	.voice__top-decoration {
+		width: rem(301);
+		height: rem(138);
+		position: absolute;
+		top: rem(-124);
+		left: calc(50% - min(47.9166vw, 38.75rem));
+	}
+
+	.voice__top-decoration--md-none {
+		display: none;
+		@include mq('md') {
+			display: block;
+		}
+	}
+	.voice__top-decoration img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.voice__inner {
+		position: relative;
+		max-width: rem(600);
+		width: 100%;
+	}
+
+	.voice__container {
+		margin-top: rem(43);
+		@include mq(md) {
+			margin-top: rem(30);
+		}
+	}
+
+	.voice__button {
+		margin-top: rem(41);
+		text-align: center;
+		@include mq(md) {
+			margin-top: rem(80);
+		}
+	}
+
+	.voice__bottom-decoration {
+		width: rem(71);
+		height: rem(162);
+		position: absolute;
+		right: calc(50% - min(47.9166vw, 33.75rem));
+		bottom: rem(-67);
+	}
+
+	.voice__bottom-decoration--md-none {
+		display: none;
+		@include mq('md') {
+			display: block;
+		}
+	}
+	.voice__bottom-decoration img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.boxes__items {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		gap: rem(41);
+		margin: 0 auto;
+		@include mq(md) {
+			grid-template-columns: repeat(2, 1fr);
+			width: initial;
+			max-width: initial;
+		}
+	}
+	.boxes__items.boxes__items--sub {
+		gap: rem(40);
+		@include mq(md) {
+			row-gap: rem(80);
+		}
+	}
+
+	.boxes__item {
+		padding: rem(15) rem(16) rem(24);
+		box-shadow: rem(2) rem(2) rem(10) rgba(0, 0, 0, 0.25);
+		@include mq(md) {
+			padding: rem(20) rem(25) rem(24);
+		}
+	}
+	.boxes__item.boxes__item--sub {
+		margin-top: rem(24);
+		box-shadow: initial;
+		padding: initial;
+	}
+	.boxes__item a:hover {
+		opacity: 0.5;
+		transition: 0.3s;
+	}
+
+	.box__container {
+		display: flex;
+	}
+	.box__container.box__container--sub {
+		flex-direction: column-reverse;
+	}
+	.box__wrapper {
+		display: flex;
+		flex-direction: column;
+		@include mq(md) {
+			flex-direction: row;
+			align-items: end;
+			justify-content: space-between;
+		}
+	}
+	.box__header {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		max-width: calc((149 / 313) * 100%);
+		border-bottom: rem(1) solid $green;
+		padding-bottom: rem(1);
+		@include mq(md) {
+			margin-top: rem(28);
+			width: 100%;
+			max-width: calc((276 / 472) * 100%);
+		}
+	}
+	.box__header.box__header--sub {
+		margin-top: rem(14);
+		border-bottom: initial;
+		padding-bottom: initial;
+		max-width: initial;
+		@include mq(md) {
+			margin-top: rem(16);
+		}
+	}
+	.box__gender {
+		font-family: $jp-font-family1;
+		font-size: rem(12);
+		font-weight: $regular;
+		line-height: calc(18 / 12);
+	}
+
+	.box__label {
+		padding: rem(2) rem(11);
+		border: rem(1) solid $green;
+		font-family: $jp-font-family1;
+		font-weight: $regular;
+		font-size: rem(12);
+		line-height: calc(22 / 12);
+		color: $green;
+		width: 100%;
+		width: fit-content;
+		margin-left: initial;
+		@include mq(md) {
+			padding: rem(5) rem(15);
+			margin-left: auto;
+		}
+	}
+
+	.box__title {
+		margin-top: rem(4);
+		font-family: $jp-font-family1;
+		font-size: rem(16);
+		font-weight: $medium;
+		@include mq(md) {
+			margin-top: rem(8);
+			font-size: rem(24);
+		}
+	}
+
+	.box__title--sub {
+		margin-top: rem(8);
+		font-size: rem(24);
+	}
+
+	.box__image {
+		position: relative;
+		margin-left: rem(12);
+		width: 100%;
+		max-width: calc((151 / 313) * 100%);
+		@include mq(md) {
+			margin-left: rem(16);
+			max-width: calc((180 / 472) * 100%);
+		}
+	}
+	.box__image::before {
+		content: '';
+		display: block;
+		padding-top: calc((117 / 151) * 100%);
+		@include mq(md) {
+			padding-top: calc((140 / 180) * 100%);
+		}
+	}
+
+	.box__image.box__image--sub {
+		max-width: initial;
+		margin-left: initial;
+	}
+	.box__image--sub::before {
+		padding-top: calc((218 / 294) * 100%);
+		@include mq(md) {
+			padding-top: calc((216 / 294) * 100%);
+		}
+	}
+	.box__image img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.box__meta {
+		margin-top: rem(15);
+		@include mq(md) {
+			margin-top: rem(40);
+		}
+	}
+</style>

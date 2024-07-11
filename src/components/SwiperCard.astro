@@ -1,5 +1,6 @@
 ---
 import { swiperData } from '@/data/swiperData';
+import { Image } from 'astro:assets';
 ---
 
 <div class='swiper campaign__slider slider js-campaign-slider'>
@@ -9,7 +10,7 @@ import { swiperData } from '@/data/swiperData';
 				({ src, alt, label, title, subTitle, oldPrice, newPrice }) => (
 					<article class='swiper-slide slider__item'>
 						<figure class='slider__image'>
-							<img src={src} alt={alt} />
+							<Image src={src} format='avif' alt={alt} />
 						</figure>
 						<div class='slider__body'>
 							<p class='slider__label'>{label}</p>
