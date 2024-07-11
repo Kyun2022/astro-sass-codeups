@@ -1,5 +1,7 @@
 ---
-
+import Button from '@/components/Button.astro';
+import { buttonUrl } from '@/data/buttonUrl';
+const { url } = buttonUrl[4];
 ---
 
 <section class='voice top-voice'>
@@ -76,9 +78,7 @@
 			</div>
 		</div>
 		<div class='voice__button'>
-			<button class='button' onclick="location.href='voice.html'"
-				>View&nbsp;more<span class='button__arrow'></span></button
-			>
+			<Button url={url} />
 		</div>
 	</div>
 	<figure class='voice__bottom-decoration voice__bottom-decoration--md-none'>

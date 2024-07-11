@@ -1,5 +1,8 @@
 ---
+import Button from '@/components/Button.astro';
+import { buttonUrl } from '@/data/buttonUrl';
 
+const { url } = buttonUrl[5];
 ---
 
 <section class='price top-price'>
@@ -93,9 +96,7 @@
 			</ul>
 		</div>
 		<div class='price__button'>
-			<button class='button' onclick="location.href='price.html'"
-				>View&nbsp;more<span class='button__arrow'></span></button
-			>
+			<Button src={url} />
 		</div>
 	</div>
 	<figure class='price__decoration price__decoration--md-none'>
